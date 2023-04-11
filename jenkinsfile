@@ -17,21 +17,21 @@ stages {
   stage('Build ') {
     steps {
         sh 'mvn clean install'
-        sh 'docker build --tag=jagadeesh/docker:$BUILD_NUMBER .'
+        sh 'docker build --tag=jagginb/docker:$BUILD_NUMBER .'
     }
   }
 
   stage('Docker login and Docker push') {
     steps {
         sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
-        sh 'docker push jagadeesh/docker:$BUILD_NUMBER'
+        sh 'docker push jagginb/docker:$BUILD_NUMBER'
      
     }
   }
 
   stage('Docker deploy') {
     steps {
-        sh "docker run -itd -p 82:8080 jagadeesh/docker:$BUILD_NUMBER"
+        sh "docker run -itd -p 82:8080 jagginb/docker:$BUILD_NUMBER"
       
     }
   }
